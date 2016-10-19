@@ -1,7 +1,7 @@
 $(function() {
 
   //Variables
-  var firstNumber = true;
+  var counter = 0;
   var number1 = "";
   var number2 = "";
   var option = "";
@@ -9,7 +9,7 @@ $(function() {
 
   //Business Logic
   $("#one").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='1';
     }
     else {
@@ -18,7 +18,7 @@ $(function() {
   });
 
   $("#two").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='2';
     }
     else {
@@ -27,7 +27,7 @@ $(function() {
   });
 
   $("#three").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='3';
     }
     else {
@@ -36,7 +36,7 @@ $(function() {
   });
 
   $("#four").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='4';
     }
     else {
@@ -45,7 +45,7 @@ $(function() {
   });
 
   $("#five").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='5';
     }
     else {
@@ -54,7 +54,7 @@ $(function() {
   });
 
   $("#six").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='6';
     }
     else {
@@ -63,7 +63,7 @@ $(function() {
   });
 
   $("#seven").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='7';
     }
     else {
@@ -72,7 +72,7 @@ $(function() {
   });
 
   $("#eight").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='8';
     }
     else {
@@ -81,7 +81,7 @@ $(function() {
   });
 
   $("#nine").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='9';
     }
     else {
@@ -90,7 +90,7 @@ $(function() {
   });
 
   $("#zero").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='0';
     }
     else {
@@ -99,53 +99,35 @@ $(function() {
   });
 
   $("#plus").click(function() {
-    if (!firstNumber) {
-      doMath();
-      number1 = answer;
-      number2 = "";
-    }
-    firstNumber = false;
+    counter++;
     option = "plus";
   });
 
   $("#minus").click(function() {
-    if (!firstNumber) {
-      doMath();
-      number1 = answer;
-      number2 = "";
-    }
-    firstNumber = false;
+    counter++;
     option = "minus";
   });
 
   $("#mult").click(function() {
-    if (!firstNumber) {
-      doMath();
-      number1 = answer;
-      number2 = "";
-    }
-    firstNumber = false;
+    counter++;
     option = "multiply";
   });
 
   $("#divide").click(function() {
-    if (!firstNumber) {
-      doMath();
-      number1 = answer;
-      number2 = "";
-    }
-    firstNumber = false;
+    counter++;
     option = "divide";
   });
 
   $("#clear").click(function() {
-    clear();
-    firstNumber = true;
+    number1 = "";
+    number2 = "";
+    counter = 0;
+    option = "";
   });
 
 
   $("#dot").click(function() {
-    if(firstNumber) {
+    if(counter === 0) {
       number1+='.';
     }
     else {
@@ -154,11 +136,32 @@ $(function() {
   });
 
   $('#enter').click(function() {
-    doMath();
-    clear();
+    if (option === "plus") {
+      answer = add(number1,number2);
+    }
+    else if (option === "minus") {
+      answer = subtract(number1,number2);
+    }
+    else if (option === "multiply") {
+      answer = multiply(number1,number2);
+    }
+    else {
+      answer = divide(number1,number2);
+    }
+    number1 = "";
+    number2 = "";
+    counter = 0;
+    option = "";
   });
 
-  function add(num1, num2) {
+  /*function add(arr) {
+    var sum = 0;
+    for(i=0;i<arr.length;i++) {
+      sum+=arr[i];
+    }
+    return sum;
+  }; */
+function add(num1, num2) {
     return parseFloat(num1) + parseFloat(num2);
   };
 
@@ -174,26 +177,9 @@ $(function() {
     return parseFloat(num1) / parseFloat(num2);
   };
 
-  function clear() {
-    number1 = "";
-    number2 = "";
-    option = "";
-  }
+  $("#plus").click(function() {
 
-  function doMath() {
-    if (option === "plus") {
-      answer = Math.round(add(number1,number2) *10000) / 10000;
-    }
-    else if (option === "minus") {
-      answer = Math.round(subtract(number1,number2) *10000) / 10000;
-    }
-    else if (option === "multiply") {
-      answer = Math.round(multiply(number1,number2) *10000) / 10000;
-    }
-    else if (option === "divide"){
-      answer = Math.round(divide(number1,number2) *10000) / 10000;
-    }
-  }
+  });
 
   //Front End Logic
   $("#one").click(function() {
