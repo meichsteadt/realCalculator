@@ -1,161 +1,137 @@
 $(function() {
-
   //Variables
-  var firstNumber = true;
-  var number1 = "";
-  var number2 = "";
-  var option = "";
-  var answer = "";
+  var firstNumber = true; //determines whether the number typed is the first number or not
+  var hasAnswer = false; //determines if there is currently an answer stored
+  var enter = false; //determines if the enter key has been hit and new number typed should append or not
+  var number1 = "";//sets first number for calculation
+  var number2 = "";//sets second number for calculation
+  var answer = "";//sets the answer
+  var option = "";//set the operator option (plus, minus, multiply, divide)
 
-  //Business Logic
-  $("#one").click(function() {
-    if(firstNumber) {
-      number1+='1';
+  //================================================== Business Logic ======================================================================
+
+  //for each number goes through and checks if there is already an answer. If so overwrite number1 and set answer to blank. Else, concat the current number
+  function writeNumber(number) {
+    if(hasAnswer) {
+      if(firstNumber) {
+        number1 = number;
+      }
+      else {
+        number2 = number;
+      }
+      hasAnswer = false;
     }
     else {
-      number2+='1';
+      if(firstNumber) {
+        number1+=number;
+      }
+      else {
+        number2+=number;
+      }
     }
+  }
+
+  $("#one").click(function() {
+    var currentNumber = '1';
+    writeNumber(currentNumber);
+
   });
 
   $("#two").click(function() {
-    if(firstNumber) {
-      number1+='2';
-    }
-    else {
-      number2+='2';
-    }
+    var currentNumber = '2';
+    writeNumber(currentNumber);
   });
 
   $("#three").click(function() {
-    if(firstNumber) {
-      number1+='3';
-    }
-    else {
-      number2+='3';
-    }
+    var currentNumber = '3';
+    writeNumber(currentNumber);
   });
 
   $("#four").click(function() {
-    if(firstNumber) {
-      number1+='4';
-    }
-    else {
-      number2+='4';
-    }
+    var currentNumber = '4';
+    writeNumber(currentNumber);
   });
 
   $("#five").click(function() {
-    if(firstNumber) {
-      number1+='5';
-    }
-    else {
-      number2+='5';
-    }
+    var currentNumber = '5';
+    writeNumber(currentNumber);
   });
 
   $("#six").click(function() {
-    if(firstNumber) {
-      number1+='6';
-    }
-    else {
-      number2+='6';
-    }
+    var currentNumber = '6';
+    writeNumber(currentNumber);
   });
 
   $("#seven").click(function() {
-    if(firstNumber) {
-      number1+='7';
-    }
-    else {
-      number2+='7';
-    }
+    var currentNumber = '7';
+    writeNumber(currentNumber);
   });
 
   $("#eight").click(function() {
-    if(firstNumber) {
-      number1+='8';
-    }
-    else {
-      number2+='8';
-    }
+    var currentNumber = '8';
+    writeNumber(currentNumber);
   });
 
   $("#nine").click(function() {
-    if(firstNumber) {
-      number1+='9';
-    }
-    else {
-      number2+='9';
-    }
+    var currentNumber = '9';
+    writeNumber(currentNumber);
   });
 
   $("#zero").click(function() {
-    if(firstNumber) {
-      number1+='0';
-    }
-    else {
-      number2+='0';
-    }
+    var currentNumber = '0';
+    writeNumber(currentNumber);
   });
+
+  //if there is an answer number1 is now equal to that answer, runs it's respective math operation, then sets the answer to
+  function operator() {
+    if(hasAnswer){
+      number1 = answer;
+      doMath();
+    }
+    if (!firstNumber) {
+      doMath();
+      number1 = answer;
+      number2 = "";
+    }
+    firstNumber = false;
+  }
 
   $("#plus").click(function() {
-    if (!firstNumber) {
-      doMath();
-      number1 = answer;
-      number2 = "";
-    }
-    firstNumber = false;
-    option = "plus";
-  });
+      operator();
+      option = "plus";
+    });
 
-  $("#minus").click(function() {
-    if (!firstNumber) {
-      doMath();
-      number1 = answer;
-      number2 = "";
-    }
-    firstNumber = false;
-    option = "minus";
-  });
+    $("#minus").click(function() {
+      operator();
+      option = "minus";
+    });
 
-  $("#mult").click(function() {
-    if (!firstNumber) {
-      doMath();
-      number1 = answer;
-      number2 = "";
-    }
-    firstNumber = false;
-    option = "multiply";
-  });
+    $("#mult").click(function() {
+      operator();
+      option = "multiply";
+    });
 
-  $("#divide").click(function() {
-    if (!firstNumber) {
-      doMath();
-      number1 = answer;
-      number2 = "";
-    }
-    firstNumber = false;
-    option = "divide";
-  });
+    $("#divide").click(function() {
+      operator();
+      option = "divide";
+    });
 
   $("#clear").click(function() {
     clear();
-    firstNumber = true;
+    hasAnswer = false;
+    answer = '';
   });
 
 
   $("#dot").click(function() {
-    if(firstNumber) {
-      number1+='.';
-    }
-    else {
-      number2+='.';
-    }
+    currentNumber = '.';
+    writeNumber(currentNumber);
   });
 
   $('#enter').click(function() {
     doMath();
     clear();
+    hasAnswer = true;
   });
 
   function add(num1, num2) {
@@ -174,12 +150,6 @@ $(function() {
     return parseFloat(num1) / parseFloat(num2);
   };
 
-  function clear() {
-    number1 = "";
-    number2 = "";
-    option = "";
-  }
-
   function doMath() {
     if (option === "plus") {
       answer = Math.round(add(number1,number2) *10000) / 10000;
@@ -195,41 +165,100 @@ $(function() {
     }
   }
 
-  //Front End Logic
+  function clear() {
+    number1 = "";
+    number2 = "";
+    option = "";
+    firstNumber = true;
+  }
+
+  //================================================== Front end Logic ==================================================================
+  function hasOperator() {
+    if(option === 'plus' || option === 'minus'
+    || option === 'multiply' || option === 'divide') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   $("#one").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+      console.log('ok');
+    }
     $("#answer").append("<p>1</p>");
   });
 
   $("#two").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
     $("#answer").append("<p>2</p>");
   });
 
   $("#three").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
     $("#answer").append("<p>3</p>");
   });
 
   $("#four").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
     $("#answer").append("<p>4</p>");
   });
 
   $("#five").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
     $("#answer").append("<p>5</p>");
   });
 
   $("#six").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
     $("#answer").append("<p>6</p>");
   });
 
   $("#seven").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
     $("#answer").append("<p>7</p>");
   });
 
   $("#eight").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
     $("#answer").append("<p>8</p>");
   });
 
   $("#nine").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
     $("#answer").append("<p>9</p>");
+  });
+
+  $("#zero").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
+    $("#answer").append("<p>0</p>");
+  });
+
+  $("#dot").click(function() {
+    if(enter && !hasOperator() ){
+      clearScreen();
+    }
+    $("#answer").append("<p>.</p>");
   });
 
   $("#plus").click(function() {
@@ -249,19 +278,23 @@ $(function() {
   });
 
   $("#clear").click(function() {
-    $("#answer").children().remove();
-  });
-
-  $("#zero").click(function() {
-    $("#answer").append("<p>0</p>");
-  });
-
-  $("#dot").click(function() {
-    $("#answer").append("<p>.</p>");
+    clearScreen();
   });
 
   $('#enter').click(function() {
-    $("#answer").children().remove();
+    $('#answer').children().remove();
     $("#answer").append('<p>'+answer+'</p>');
+    enter = true;
   });
+  function clearScreen() {
+    $('#answer').children().remove();
+    enter = false;
+  }
 });
+
+
+/*  Button function used for debugging
+$('#display').click(function() {
+    console.log('1:' + number1, '2:' + number2, 'a:' + answer);
+    console.log("fn:" + firstNumber,'ans:' + hasAnswer,'opt:' + hasOperator() + ' ' + option, 'enter:' + enter);
+  }); */

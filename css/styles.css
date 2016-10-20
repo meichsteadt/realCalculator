@@ -5,18 +5,21 @@ body {
 p {
   font-size: 24px;
   text-align: center;
-  margin-top: 24px;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .row {
   width: 360px;
   margin: 0 auto;
+  display: table;
 }
 .col-xs-3{
   border: 1px solid black;
-  height: 100px;
+  height: 80px;
   background-color: #c1c1c1;
   border-radius: 20px;
+  display: table;
 }
 
 .col-xs-3:hover {
@@ -30,18 +33,20 @@ p {
 }
 .col-xs-12 {
   border: 1px solid black;
-    height: 100px;
-    border-radius: 20px;
-    background-color: #6e6f72;
+  height: 50px;
+  border-radius: 20px;
+  background-color: #6e6f72;
+  display: table;
+  margin-top: 15px;
 }
 
 .container {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .box {
-  height: 950px;
-  width: 515px;
+  height: 550px;
+  width: 415px;
   margin: 0 auto;
   border: 3px solid black;
   background-color: #1f589e;
@@ -49,10 +54,10 @@ p {
 }
 #answer {
   margin-left: -15px;
-  margin: 100px auto 30px auto;
+  margin: 50px auto 30px auto;
   border: 3px solid black;
   width: 360px;
-  height: 200px;
+  height: 60px;
   text-align: right;
   background-color: #cbced3;
   border-radius: 20px;
@@ -67,5 +72,6 @@ p {
 @media screen and (max-width: 500px) {
   .box {
     width: 367px;
+    height: 450px;
   }
 }
